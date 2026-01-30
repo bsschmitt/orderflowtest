@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Order
 from .serializers import OrderSerializer
+from .permissions import IsOwner
 
 class ORderViewSet(ModelViewSet):
     """
@@ -14,8 +15,9 @@ class ORderViewSet(ModelViewSet):
     - Pedido criado sempre pertence ao usuário autenticado 
     """
 
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         #Retorna os pedidos do usuário autenticado
