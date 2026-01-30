@@ -34,10 +34,10 @@ class Order(models.Model):
     def __str__(self):
         return f'Order #{self.id} - {self.get_status_display()}'
 
-    # 🔥 VALIDAÇÃO CENTRAL DO DOMÍNIO
+    # VALIDAÇÃO CENTRAL DO DOMÍNIO
     def clean(self):
 
-        # ✅ BLOQUEIA criação com status diferente de CREATED
+        # BLOQUEIA criação com status diferente de CREATED
         if not self.pk:
             if self.status != OrderStatus.CREATED:
                 raise ValidationError(
@@ -71,7 +71,7 @@ class Order(models.Model):
                     f"Cannot change status from {old_order.status} to {self.status}"
                 )
 
-    # 🔥 GARANTE QUE clean() SEMPRE RODE
+    # GARANTE QUE clean() SEMPRE RODE
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
